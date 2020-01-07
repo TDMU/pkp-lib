@@ -62,7 +62,7 @@ class DashboardHandler extends Handler {
 		$templateMgr->assign('myQueueListData', json_encode($myQueueListHandler->getConfig()));
 
 		$userRoles = $this->getAuthorizedContextObject(ASSOC_TYPE_USER_ROLES);
-		if (!empty(array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER), $userRoles))) {
+		if (!empty(array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR), $userRoles))) {
 
 			// Unassigned
 			$unassignedListHandler = new SubmissionsListHandler(array(
@@ -94,7 +94,7 @@ class DashboardHandler extends Handler {
 			),
 			'lazyLoad' => true,
 		);
-		if (!$currentUser->hasRole(array(ROLE_ID_MANAGER), $request->getContext()->getId()) && !$currentUser->hasRole(array(ROLE_ID_SITE_ADMIN), CONTEXT_SITE)) {
+		if (!$currentUser->hasRole(array(ROLE_ID_SUB_EDITOR), $request->getContext()->getId()) && !$currentUser->hasRole(array(ROLE_ID_MANAGER), $request->getContext()->getId()) && !$currentUser->hasRole(array(ROLE_ID_SITE_ADMIN), CONTEXT_SITE)) {
 			$params['getParams']['assignedTo'] = $currentUser->getId();
 		}
 		$archivedListHandler = new SubmissionsListHandler($params);

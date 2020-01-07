@@ -101,7 +101,7 @@ class UserAccessibleWorkflowStageRequiredPolicy extends AuthorizationPolicy {
 		// If unassigned, only managers and admins have access
 		if ($stageAssignmentsResult->wasEmpty()) {
 			$userRoles = $this->getAuthorizedContextObject(ASSOC_TYPE_USER_ROLES);
-			$accessibleStageRoles = array_intersect(array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN), $userRoles);
+			$accessibleStageRoles = array_intersect(array(ROLE_ID_SUB_EDITOR, ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN), $userRoles);
 
 		// Assigned users have access based on their assignment
 		} else {

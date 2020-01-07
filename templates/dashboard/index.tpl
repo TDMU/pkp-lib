@@ -18,8 +18,10 @@
 <div id="dashboardTabs" class="pkp_controllers_tab">
 	<ul>
 		<li><a name="myQueue" href="#myQueue">{translate key="dashboard.myQueue"}</a></li>
-		{if array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER), (array)$userRoles)}
+		{if array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR), (array)$userRoles)}
 			<li><a name="unassigned" href="#unassigned">{translate key="common.queue.long.submissionsUnassigned"}</a></li>
+        {/if}
+        {if array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER), (array)$userRoles)}
 			<li><a name="active" href="#active">{translate key="common.queue.long.active"}</a></li>
 		{/if}
 		<li><a name="archives" href="#archived">{translate key="navigation.archives"}</a></li>
@@ -35,7 +37,7 @@
 			</div>
 		</div>
 	</div>
-	{if array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER), (array)$userRoles)}
+	{if array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR), (array)$userRoles)}
 		<div id="unassigned">
 			{help file="submissions.md" section="unassigned" class="pkp_help_tab"}
 			<div class="pkp_content_panel">
@@ -47,6 +49,8 @@
 				</div>
 			</div>
 		</div>
+    {/if}
+    {if array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER), (array)$userRoles)}
 		<div id="active">
 			{help file="submissions.md" section="active" class="pkp_help_tab"}
 			<div class="pkp_content_panel">
