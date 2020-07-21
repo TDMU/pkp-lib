@@ -552,7 +552,7 @@ class PKPUserService implements EntityPropertyInterface, EntityReadInterface {
 			$roleDao = DAORegistry::getDAO('RoleDAO'); /* @var $roleDao RoleDAO */
 			$userRoles = $roleDao->getByUserId($userId, $contextId);
 			foreach ($userRoles as $userRole) {
-				if (in_array($userRole->getId(), [ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER])) {
+				if (in_array($userRole->getId(), [ROLE_ID_SUB_EDITOR, ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER])) {
 					$accessibleStageRoles[] = $userRole->getId();
 				}
 			}
