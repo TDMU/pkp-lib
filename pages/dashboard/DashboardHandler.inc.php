@@ -86,7 +86,7 @@ class DashboardHandler extends Handler {
 		]);
 		$lists[$myQueueListPanel->id] = $myQueueListPanel->getConfig();
 
-		if (!empty(array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER), $userRoles))) {
+		if (!empty(array_intersect(array(ROLE_ID_SITE_ADMIN, ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR), $userRoles))) {
 
 			// Unassigned
 			$unassignedListPanel = new \APP\components\listPanels\SubmissionsListPanel(
