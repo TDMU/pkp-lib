@@ -624,6 +624,25 @@ class PKPSubmissionHandler extends APIHandler {
 			]
 		);
 
+		$notificationManager = new NotificationManager();
+		$userService = Services::get('user');
+		$usersIterator = $userService->getMany(array(
+			'contextId' => $submission->getContextId(),
+			'assignedToSubmission' => $submission->getId(),
+		));
+
+		foreach ($usersIterator as $user) {
+			$notificationManager->createNotification(
+				$request,
+				$user->getId(),
+				NOTIFICATION_TYPE_SUBMISSION_NEW_VERSION,
+				$submission->getContextId(),
+				ASSOC_TYPE_SUBMISSION,
+				$submission->getId(),
+				NOTIFICATION_LEVEL_TASK
+			);
+		}
+
 		return $response->withJson($publicationProps, 200);
 	}
 

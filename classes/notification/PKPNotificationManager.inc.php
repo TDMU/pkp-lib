@@ -191,12 +191,11 @@ class PKPNotificationManager extends PKPNotificationOperationManager {
 				$templateMgr->assign('errors', $content);
 				return $templateMgr->fetch('controllers/notification/formErrorNotificationContent.tpl');
 			case NOTIFICATION_TYPE_ERROR:
-				if (is_array($content)) {
-					$templateMgr->assign('errors', $content);
-					return $templateMgr->fetch('controllers/notification/errorNotificationContent.tpl');
-				} else {
-					return $content;
-				}
+				if (!is_array($content)) return $content;
+
+				$templateMgr = TemplateManager::getManager($request);
+				$templateMgr->assign('errors', $content);
+				return $templateMgr->fetch('controllers/notification/errorNotificationContent.tpl');
 			default:
 				$delegateResult = $this->getByDelegate(
 					$notification->getType(),
@@ -363,6 +362,7 @@ class PKPNotificationManager extends PKPNotificationOperationManager {
 		switch ($notificationType) {
 			case NOTIFICATION_TYPE_SUBMISSION_SUBMITTED:
 			case NOTIFICATION_TYPE_METADATA_MODIFIED:
+			case NOTIFICATION_TYPE_SUBMISSION_NEW_VERSION:
 			case NOTIFICATION_TYPE_EDITOR_ASSIGNMENT_REQUIRED:
 				assert($assocType == ASSOC_TYPE_SUBMISSION && is_numeric($assocId));
 				import('lib.pkp.classes.notification.managerDelegate.SubmissionNotificationManager');

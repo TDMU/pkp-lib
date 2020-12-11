@@ -296,6 +296,7 @@ abstract class PKPSubmissionQueryBuilder extends BaseQueryBuilder implements Ent
 		} else if ($this->orderColumn === 'po.date_published') {
 			$this->columns[] = 'po.date_published';
 			$q->leftJoin('publications as po', 's.current_publication_id', '=', 'po.publication_id');
+			$q->groupBy('po.date_published');
 		}
 
 		// statuses
@@ -403,6 +404,10 @@ abstract class PKPSubmissionQueryBuilder extends BaseQueryBuilder implements Ent
 						->orWhere(function($q) use ($word, $isAssignedOnly) {
 							$q->where('aus.setting_name', IDENTITY_SETTING_FAMILYNAME);
 							$q->where(Capsule::raw('lower(aus.setting_value)'), 'LIKE', "%{$word}%");
+						})
+						->orWhere(function($q) use ($word, $isAssignedOnly) {
+							$q->where('aus.setting_name', 'orcid');
+							$q->where(Capsule::raw('lower(aus.setting_value)'), '=', "{$word}");
 						});
 						// Prevent reviewers from matching searches by author name
 						if ($isAssignedOnly) {

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15T13:36:56-07:00\n"
-"PO-Revision-Date: 2020-06-04 18:39+0000\n"
+"PO-Revision-Date: 2020-09-19 15:49+0000\n"
 "Last-Translator: Marie-Hélène Vézina [UdeMontréal] <marie-"
 "helene.vezina@umontreal.ca>\n"
 "Language-Team: French (Canada) <http://translate.pkp.sfu.ca/projects/pkp-lib/"
@@ -170,7 +170,7 @@ msgid "common.available"
 msgstr "Disponible"
 
 msgid "common.back"
-msgstr "Précédent-e"
+msgstr "Précédent"
 
 msgid "common.between"
 msgstr "entre"
@@ -562,10 +562,10 @@ msgid "common.noMatches"
 msgstr "Aucune concordance"
 
 msgid "common.off"
-msgstr "Arrêté-e"
+msgstr "Arrêté"
 
 msgid "common.on"
-msgstr "Démarré-e"
+msgstr "Démarré"
 
 msgid "common.ok"
 msgstr "OK"
@@ -625,10 +625,10 @@ msgid "common.pluginDisabled"
 msgstr "Le plugiciel « {$pluginName} » a été désactivé."
 
 msgid "common.prefix"
-msgstr "Préfixe"
+msgstr "Article inital"
 
 msgid "common.prefixAndTitle.tip"
-msgstr "Si le titre du document commence par « un/une » ou  « le/la » (ou quelque chose de similaire concernant l'ordre alphabétique), mettre le mot dans Préfixe."
+msgstr "Exemples : Un/Une, Le/La"
 
 msgid "common.preview"
 msgstr "Aperçu"
@@ -1114,10 +1114,10 @@ msgid "help.toc"
 msgstr "Table des matières"
 
 msgid "help.previous"
-msgstr "Précédent-e"
+msgstr "Précédent"
 
 msgid "help.next"
-msgstr "Suivant-e"
+msgstr "Suivant"
 
 msgid "help.upALevel"
 msgstr "Niveau supérieur"
