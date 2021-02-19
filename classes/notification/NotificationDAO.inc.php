@@ -3,8 +3,8 @@
 /**
  * @file classes/notification/NotificationDAO.inc.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2000-2020 John Willinsky
+ * Copyright (c) 2014-2021 Simon Fraser University
+ * Copyright (c) 2000-2021 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class NotificationDAO
@@ -247,7 +247,7 @@ class NotificationDAO extends DAO {
 	 * @param $level int
 	 * @return int
 	 */
-	function getNotificationCount($read = true, $userId, $contextId = null, $level = NOTIFICATION_LEVEL_NORMAL) {
+	function getNotificationCount($read = true, $userId = null, $contextId = null, $level = NOTIFICATION_LEVEL_NORMAL) {
 		$params = array((int) $userId, (int) $level);
 		if ($contextId) $params[] = (int) $contextId;
 

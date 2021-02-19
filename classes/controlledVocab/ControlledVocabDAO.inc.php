@@ -3,8 +3,8 @@
 /**
  * @file classes/controlledVocab/ControlledVocabDAO.inc.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2000-2020 John Willinsky
+ * Copyright (c) 2014-2021 Simon Fraser University
+ * Copyright (c) 2000-2021 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class ControlledVocabDAO
@@ -240,7 +240,7 @@ class ControlledVocabDAO extends DAO {
 		$controlledVocabs = array();
 		$controlledVocabEntryDao = $this->getEntryDAO();
 		$controlledVocabEntrySettingsDao = $controlledVocabEntryDao->getSettingsDAO();
-		$parser = new XMLParser();
+		$parser = new PKPXMLParser();
 		$tree = $parser->parse($filename);
 		foreach ($tree->getChildren() as $controlledVocabNode) {
 			assert($controlledVocabNode->getName() == 'controlled_vocab');

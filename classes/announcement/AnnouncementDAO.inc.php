@@ -3,8 +3,8 @@
 /**
  * @file classes/announcement/AnnouncementDAO.inc.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2000-2020 John Willinsky
+ * Copyright (c) 2014-2021 Simon Fraser University
+ * Copyright (c) 2000-2021 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class AnnouncementDAO
@@ -104,7 +104,7 @@ class AnnouncementDAO extends SchemaDAO {
 			->orderByDesc('date_posted')
 			->get();
 		foreach ($result as $row) {
-			yield $this->_fromRow((array) $row);
+			yield $row->announcement_id => $this->_fromRow((array) $row);
 		}
 	}
 
@@ -120,7 +120,7 @@ class AnnouncementDAO extends SchemaDAO {
 			$rangeInfo
 		);
 		foreach ($result as $row) {
-			yield $this->_fromRow((array) $row);
+			yield $row->announcement_id => $this->_fromRow((array) $row);
 		}
 	}
 

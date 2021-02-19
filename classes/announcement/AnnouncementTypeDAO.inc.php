@@ -3,8 +3,8 @@
 /**
  * @file classes/announcement/AnnouncementTypeDAO.inc.php
  *
- * Copyright (c) 2014-2020 Simon Fraser University
- * Copyright (c) 2000-2020 John Willinsky
+ * Copyright (c) 2014-2021 Simon Fraser University
+ * Copyright (c) 2000-2021 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class AnnouncementTypeDAO
@@ -167,7 +167,7 @@ class AnnouncementTypeDAO extends DAO {
 			[(int) $assocType, (int) $assocId]
 		);
 		foreach ($result as $row) {
-			yield $this->_fromRow((array) $row);
+			yield $row->type_id => $this->_fromRow((array) $row);
 		}
 	}
 
