@@ -270,7 +270,7 @@ class PKPPublicationDAO extends SchemaDAO implements PKPPubIdPluginDAO {
 				AND ps.setting_name= ?',
 			[
 				$pubObjectId,
-				'pubid::' . $pubIdType,
+				'pub-id::' . $pubIdType,
 			]
 		);
 		$this->flushCache();
@@ -314,5 +314,40 @@ class PKPPublicationDAO extends SchemaDAO implements PKPPubIdPluginDAO {
 			default: fatalError("Unknown database type!");
 		}
 		$this->flushCache();
+	}
+
+	/**
+	 * Find publication ids by querying settings.
+	 * @param $settingName string
+	 * @param $settingValue mixed
+	 * @param $contextId int
+	 * @return array Publication.
+	 */
+	public function getIdsBySetting($settingName, $settingValue, $contextId) {
+		$q = Capsule::table('publications as p')
+			->join('publication_settings as ps', 'p.publication_id', '=', 'ps.publication_id')
+			->join('submissions as s', 'p.submission_id', '=', 's.submission_id')
+			->where('ps.setting_name', '=', $settingName)
+			->where('ps.setting_value', '=', $settingValue)
+			->where('s.context_id', '=', (int) $contextId);
+
+		return $q->select('p.publication_id')
+			->pluck('p.publication_id')
+			->toArray();
+	}
+
+	/**
+	 * Check if the publication ID exists.
+	 * @param $publicationId int
+	 * @param $submissionId int, optional
+	 * @return boolean
+	 */
+	function exists($publicationId, $submissionId = null) {
+		$q = Capsule::table('publications');
+		$q->where('publication_id', '=', $publicationId);
+		if ($submissionId) {
+			$q->where('submission_id', '=', $submissionId);
+		}
+		return $q->exists();
 	}
 }

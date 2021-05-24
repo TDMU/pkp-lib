@@ -158,7 +158,7 @@ class PKPTemplateManager extends Smarty {
 			if (!empty($favicon)) {
 				$publicFileManager = new PublicFileManager();
 				$faviconDir = $request->getBaseUrl() . '/' . $publicFileManager->getContextFilesPath($currentContext->getId());
-				$this->addHeader('favicon', '<link rel="icon" href="' . $faviconDir . '/' . $favicon['uploadName'] . '">');
+				$this->addHeader('favicon', '<link rel="icon" href="' . $faviconDir . '/' . $favicon['uploadName'] . '">', ['contexts' => ['frontend', 'backend']]);
 			}
 		}
 
@@ -189,7 +189,7 @@ class PKPTemplateManager extends Smarty {
 					$publicFileManager = new PublicFileManager();
 					$this->addStyleSheet(
 						'contextStylesheet',
-						$request->getBaseUrl() . '/' . $publicFileManager->getContextFilesPath($currentContext->getId()) . '/' . $contextStyleSheet['uploadName'],
+						$request->getBaseUrl() . '/' . $publicFileManager->getContextFilesPath($currentContext->getId()) . '/' . $contextStyleSheet['uploadName'] . '?d=' . urlencode($contextStyleSheet['dateUploaded']),
 						['priority' => STYLE_SEQUENCE_LATE]
 					);
 				}
@@ -788,8 +788,8 @@ class PKPTemplateManager extends Smarty {
 			'common.selectWithName',
 			'common.unknownError',
 			'common.view',
-			'common.viewLess',
-			'common.viewMore',
+			'list.viewLess',
+			'list.viewMore',
 			'common.viewWithName',
 			'common.yes',
 			'form.dataHasChanged',

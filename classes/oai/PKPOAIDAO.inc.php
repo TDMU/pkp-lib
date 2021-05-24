@@ -132,6 +132,10 @@ abstract class PKPOAIDAO extends DAO {
 			$total++;
 			$result->next();
 		}
+		while ($result->current()) {
+			$total++;
+			$result->next();
+		}
 		return $records;
 	}
 
@@ -160,6 +164,10 @@ abstract class PKPOAIDAO extends DAO {
 			$total++;
 			$result->next();
 		}
+		while ($result->current()) {
+			$total++;
+			$result->next();
+		}
 		return $records;
 	}
 
@@ -174,7 +182,7 @@ abstract class PKPOAIDAO extends DAO {
 		$result = $this->_getRecordsRecordSet($setIds, null, null, null, null, 'last_modified ASC');
 		if ($row = $result->current()) {
 			$record = $this->_returnRecordFromRow((array) $row);
-			$datestamp = OAIUtils::UTCtoTimestamp($record->datestamp);
+			return OAIUtils::UTCtoTimestamp($record->datestamp);
 		}
 		return 0;
 	}

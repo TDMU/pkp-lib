@@ -230,6 +230,8 @@ class PKPSubmissionHandler extends APIHandler {
 						$val = array($val);
 					}
 					$params[$param] = array_map('intval', $val);
+					// Special case: assignedTo can be -1 for unassigned
+					if ($param == 'assignedTo' && $val == [-1]) $params[$param] = -1;
 					break;
 
 				case 'daysInactive':
@@ -623,6 +625,7 @@ class PKPSubmissionHandler extends APIHandler {
 	 */
 	public function versionPublication($slimRequest, $response, $args) {
 		$request = $this->getRequest();
+		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_SUBMISSION, LOCALE_COMPONENT_APP_SUBMISSION); // notification.type.submissionNewVersion
 		$submission = $this->getAuthorizedContextObject(ASSOC_TYPE_SUBMISSION);
 		$publication = Services::get('publication')->get((int) $args['publicationId']);
 

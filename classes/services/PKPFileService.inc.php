@@ -103,7 +103,7 @@ class PKPFileService {
 			throw new Exception("Unable to locate file $id.");
 		}
 		$path = $file->path;
-		if (!$this->fs->delete($path)) {
+		if ($this->fs->has($path) && !$this->fs->delete($path)) {
 			throw new Exception("Unable to delete file $id at $path.");
 		}
 		Capsule::table('files')
@@ -117,14 +117,27 @@ class PKPFileService {
 	 * This method sends a HTTP response and ends the request handling.
 	 * No code will run after this method is called.
 	 *
-	 * @param string $path The path to the file
+	 * @param string|int $pathOrFileId The path to the file or file ID
 	 * @param string $filename Filename to give to the downloaded file
 	 * @param boolean $inline Whether to stream the file to the browser
 	 */
-	public function download($path, $filename, $inline = false) {
+	public function download($pathOrFileId, $filename, $inline = false) {
+
+		$dispatcher = Application::get()->getRequest()->getDispatcher();
+
+		if (is_int($pathOrFileId)) {
+			// Is the file ID
+			$fileId = $pathOrFileId;
+			$file = $this->get($fileId);
+			if (!$file) $dispatcher->handle404();
+			$path = $file->path;
+		} else {
+			// Is the path to the file; compatibility fix, see pkp/pkp-lib#6663
+			$path = $pathOrFileId;
+		}
 
 		if (!$this->fs->has($path)) {
-			Application::get()->getRequest()->getDispatcher()->handle404();
+			$dispatcher->handle404();
 		}
 
 		if (HookRegistry::call('File::download', [$path, &$filename, $inline])) {
@@ -132,12 +145,13 @@ class PKPFileService {
 		}
 
 		// Stream the file to the end user.
-		$mimetype = $this->fs->getMimetype($path) ?? 'application/octet-stream';
+		$mimetype = $file->mimetype ?? $this->fs->getMimetype($path) ?? 'application/octet-stream';
 		$filesize = $this->fs->getSize($path);
+		$encodedFilename = urlencode($filename);
 		header("Content-Type: $mimetype");
 		header("Content-Length: $filesize");
 		header('Accept-Ranges: none');
-		header('Content-Disposition: ' . ($inline ? 'inline' : 'attachment') . "; filename=\"$filename\"");
+		header('Content-Disposition: ' . ($inline ? 'inline' : 'attachment') . "; filename*=UTF-8''\"$encodedFilename\"");
 		header('Cache-Control: private'); // Workarounds for IE weirdness
 		header('Pragma: public');
 
@@ -153,8 +167,8 @@ class PKPFileService {
 	 * @return string
 	 */
 	public function formatFilename($path, $filename) {
-		$extension = \Stringy\Stringy::create(pathinfo($path, PATHINFO_EXTENSION))->toLowerCase();
-		$newFilename = \Stringy\Stringy::create($filename)->toLowerCase()->dasherize()->regexReplace('[^a-z0-9\-\_.]', '');
+		$extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+		$newFilename = $filename;
 		if (!empty($extension) && substr($newFilename, (strlen($extension) * -1)) != $extension) {
 			$newFilename .= '.' . $extension;
 		}
