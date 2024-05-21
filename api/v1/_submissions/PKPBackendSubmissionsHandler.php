@@ -113,7 +113,7 @@ abstract class PKPBackendSubmissionsHandler extends APIHandler
         // Anyone not a manager or site admin can only access their assigned
         // submissions
         $userRoles = $this->getAuthorizedContextObject(Application::ASSOC_TYPE_USER_ROLES);
-        $canAccessUnassignedSubmission = !empty(array_intersect([Role::ROLE_ID_SITE_ADMIN, Role::ROLE_ID_MANAGER], $userRoles));
+        $canAccessUnassignedSubmission = !empty(array_intersect([Role::ROLE_ID_SITE_ADMIN, Role::ROLE_ID_MANAGER, ROLE_ID_SUB_EDITOR], $userRoles));
         Hook::call('API::submissions::params', [$collector, $slimRequest]);
         if (!$canAccessUnassignedSubmission) {
             if (!is_array($collector->assignedTo)) {

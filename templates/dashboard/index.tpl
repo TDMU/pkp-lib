@@ -22,7 +22,7 @@
 				@set="set"
 			/>
 		</tab>
-		{if array_intersect(array(\PKP\security\Role::ROLE_ID_SITE_ADMIN, \PKP\security\Role::ROLE_ID_MANAGER), (array)$userRoles)}
+		{if array_intersect(array(\PKP\security\Role::ROLE_ID_SITE_ADMIN, \PKP\security\Role::ROLE_ID_MANAGER, \PKP\security\Role::ROLE_ID_SUB_EDITOR), (array)$userRoles)}
 			<tab id="unassigned" label="{translate key="common.queue.long.submissionsUnassigned"}" :badge="components.{$smarty.const.SUBMISSIONS_LIST_UNASSIGNED}.itemsMax">
 				{help file="submissions" section="unassigned" class="pkp_help_tab"}
 				<submissions-list-panel
@@ -30,6 +30,8 @@
 					@set="set"
 				/>
 			</tab>
+		{/if}
+        {if array_intersect(array(\PKP\security\Role::ROLE_ID_SITE_ADMIN, \PKP\security\Role::ROLE_ID_MANAGER), (array)$userRoles)}
 			<tab id="active" label="{translate key="common.queue.long.active"}" :badge="components.{$smarty.const.SUBMISSIONS_LIST_ACTIVE}.itemsMax">
 				{help file="submissions" section="active" class="pkp_help_tab"}
 				<submissions-list-panel

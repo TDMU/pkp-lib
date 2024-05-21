@@ -247,7 +247,7 @@ class Repository
         }
 
         // Managers and admin have access if not assigned to the submission or are assigned in a revoked role
-        $managerRoles = array_intersect($userRoleIds, [Role::ROLE_ID_SITE_ADMIN, Role::ROLE_ID_MANAGER]);
+        $managerRoles = array_intersect($userRoleIds, [Role::ROLE_ID_SITE_ADMIN, Role::ROLE_ID_MANAGER, Role::ROLE_ID_SUB_EDITOR]);
         if (empty($accessibleWorkflowStages) && !empty($managerRoles)) {
             $workflowStages = Application::getApplicationStages();
             foreach ($workflowStages as $stageId) {

@@ -102,7 +102,8 @@ class SubmissionAccessPolicy extends ContextPolicy
         //
         if (isset($roleAssignments[Role::ROLE_ID_SUB_EDITOR])) {
             // 1) Sub editors can access all operations on submissions ...
-            $subEditorSubmissionAccessPolicy = new PolicySet(PolicySet::COMBINING_DENY_OVERRIDES);
+            $subEditorSubmissionAccessPolicy = new PolicySet(PolicySet::COMBINING_PERMIT_OVERRIDES);
+			//$subEditorSubmissionAccessPolicy = new PolicySet(PolicySet::COMBINING_DENY_OVERRIDES);
             $subEditorSubmissionAccessPolicy->addPolicy(new RoleBasedHandlerOperationPolicy($request, Role::ROLE_ID_SUB_EDITOR, $roleAssignments[Role::ROLE_ID_SUB_EDITOR]));
 
             // 2b) ... but only if they have been assigned to the requested submission.
